@@ -1,24 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
 
+import { ScheduleComponent, Inject, Day, Week, WorkWeek, Month, Agenda, EventSettingsModel } from "@syncfusion/ej2-react-schedule"
+
+import { DataManager, WebApiAdaptor } from '@syncfusion/ej2-data';
+
 function App() {
+  const services = [Day, Week, WorkWeek, Month, Agenda];
+
+  const remoteData = new DataManager({
+    url: 'https://js.syncfusion.com/demos/ejservices/api/Schedule/LoadData',
+    adaptor: new WebApiAdaptor,
+    crossDomain: true
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ScheduleComponent currentView='Month' selectedDate={new Date(2017, 5, 5)}
+      eventSettings={{ dataSource: remoteData }}
+    >
+      <Inject services={ services } />
+    </ScheduleComponent>
   );
 }
 
